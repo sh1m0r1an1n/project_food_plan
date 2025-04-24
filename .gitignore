@@ -169,3 +169,4 @@ cython_debug/
 *.svg
 *.ico
 *.webp
+*.sqlite3
