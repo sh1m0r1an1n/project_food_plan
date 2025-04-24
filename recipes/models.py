@@ -2,6 +2,18 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 
+class DietType(models.Model):
+    name = models.CharField(verbose_name="Название", max_length=20, unique=True)
+    slug = models.SlugField(verbose_name="Слаг", max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Тип диеты"
+        verbose_name_plural = "Типы диет"
+
+
 class Ingredient(models.Model):
     name = models.CharField(
         verbose_name="Название", max_length=50, help_text="Пример: Помидор"
@@ -17,11 +29,6 @@ class Ingredient(models.Model):
 
 
 class Recipe(models.Model):
-    DIET_TYPES = [
-        ("default", "Без ограничений"),
-        ("vegan", "Веганское"),
-        ("gluten_free", "Без глютена"),
-    ]
     title = models.CharField(
         verbose_name="Название",
         max_length=100,
@@ -32,12 +39,10 @@ class Recipe(models.Model):
         help_text="Пример: Нежное куриное филе в сливочном соусе с травами.",
     )
     image = models.ImageField(verbose_name="Фото блюда", upload_to="media/", blank=True)
-    diet_type = models.CharField(
-        verbose_name="Тип питания",
-        max_length=20,
-        choices=DIET_TYPES,
-        default="default",
-        db_index=True,
+    diet_types = models.ManyToManyField(
+        DietType,
+        verbose_name="Типы питания",
+        related_name="recipes"
     )
     total_cost = models.DecimalField(
         verbose_name="Общая стоимость",
