@@ -38,7 +38,7 @@ class Recipe(models.Model):
         verbose_name="Описание",
         help_text="Пример: Нежное куриное филе в сливочном соусе с травами.",
     )
-    image = models.ImageField(verbose_name="Фото блюда", upload_to="media/", blank=True)
+    image = models.ImageField(verbose_name="Фото/гифка блюда", upload_to="media/", blank=True)
     diet_types = models.ManyToManyField(
         DietType,
         verbose_name="Типы питания",
