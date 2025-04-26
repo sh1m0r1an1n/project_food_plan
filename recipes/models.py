@@ -16,11 +16,18 @@ class DietType(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(
-        verbose_name="Название", max_length=50, help_text="Пример: Помидор"
+        verbose_name="Название", max_length=50, help_text="Пример: Помидор", unique=True
+    )
+    quantity = models.CharField(
+        max_length=50,
+        verbose_name="Количество",
+        blank=True,
+        null=True,
+        help_text="Пример: 400 грамм, 6 зубчиков (необязательно)"
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.quantity})" if self.quantity else self.name
 
     class Meta:
         verbose_name = "Ингредиент"
@@ -32,6 +39,7 @@ class Recipe(models.Model):
     title = models.CharField(
         verbose_name="Название",
         max_length=100,
+        unique=True,
         help_text="Пример: Спагетти Карбонара",
     )
     description = models.TextField(
@@ -42,7 +50,8 @@ class Recipe(models.Model):
     diet_types = models.ManyToManyField(
         DietType,
         verbose_name="Типы питания",
-        related_name="recipes"
+        related_name="recipes",
+        blank=True
     )
     total_cost = models.DecimalField(
         verbose_name="Общая стоимость",
