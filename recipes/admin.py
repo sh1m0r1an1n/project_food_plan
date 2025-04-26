@@ -23,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
         "diet_types",
         "total_cost",
         "is_active",
+        "ingredients",
     )
 
     def get_diet_types(self, obj):
@@ -34,10 +35,9 @@ class RecipeAdmin(admin.ModelAdmin):
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ("name", "quantity")
-    list_editable = ("quantity",)
+    list_display = ("name",)
     search_fields = ("name",)
-    fields = ("name", "quantity",)
+    fields = ("name",)
     ordering = ["name"]
 
 
