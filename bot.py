@@ -19,13 +19,10 @@ def get_daily_recipe():
 
 
 def get_recipe_ingredients(recipe_id): # recipe_id = recipe.id
-    """Возвращает список ингредиентов рецепта с количеством."""
+    """Возвращает список ингредиентов рецепта."""
     try:
         recipe = Recipe.objects.prefetch_related('ingredients').get(id=recipe_id)
-        return [
-            f"{ingredient.name} - {ingredient.quantity}"
-            for ingredient in recipe.ingredients.all()
-        ]
+        return [ingredient.name for ingredient in recipe.ingredients.all()]
     except Recipe.DoesNotExist:
         return []
 

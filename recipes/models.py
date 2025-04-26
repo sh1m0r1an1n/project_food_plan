@@ -18,16 +18,9 @@ class Ingredient(models.Model):
     name = models.CharField(
         verbose_name="Название", max_length=50, help_text="Пример: Помидор", unique=True
     )
-    quantity = models.CharField(
-        max_length=50,
-        verbose_name="Количество",
-        blank=True,
-        null=True,
-        help_text="Пример: 400 грамм, 6 зубчиков (необязательно)"
-    )
 
     def __str__(self):
-        return f"{self.name} ({self.quantity})" if self.quantity else self.name
+        return self.name
 
     class Meta:
         verbose_name = "Ингредиент"
