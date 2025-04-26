@@ -23,6 +23,7 @@ class RecipeAdmin(admin.ModelAdmin):
         "diet_types",
         "total_cost",
         "is_active",
+        "ingredients",
     )
 
     def get_diet_types(self, obj):
