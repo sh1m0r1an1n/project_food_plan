@@ -25,14 +25,16 @@ async def start_cmd(message: types.Message):
     diet_type = await sync_to_async(list)(
         daily_recipe.diet_types.all().values_list('name', flat=True))
     ingredients = await get_recipe_ingredients(daily_recipe.id)
-    photo_path = FSInputFile(Path("media") / f'{daily_recipe.image}')
+    photo_path = FSInputFile(f'{daily_recipe.image}')
     message_with_daily_recipe = (f'Приветствую {message.from_user.first_name}!\n'
                                  f'Рецепт дня: {daily_recipe.title}.\n'
+                                 '\n'
                                  f'Описание: {daily_recipe.description}\n'
+                                 '\n'
                                  f'Ограничения: {', '.join(diet_type)}\n'
-                                 f'Примерная стоимость: {daily_recipe.total_cost}\n'
+                                 f'Cтоимость: {daily_recipe.total_cost}\n'
+                                 '\n'
                                  f'Ингредиенты: {', '.join(ingredients)}\n'
-                                 f'Шаги приготовления: {daily_recipe.cooking_steps}\n\n'
                                  f'Если вы хотите выбрать другие ограничения по составу блюда или вас не устроила стоимость, нажмите на кнопку⏬')
 
     if f'{daily_recipe.image}'.endswith('.gif'):
@@ -109,12 +111,14 @@ async def get_budget_of_user(message: types.Message, state: FSMContext):
     try:
         suitable_recipe = random.choice(matching_recipes)
         ingredients = await get_recipe_ingredients(suitable_recipe.id)
-        photo_path = FSInputFile(Path("media") / f'{suitable_recipe.image}')
+        photo_path = FSInputFile(f'{suitable_recipe.image}')
         message_with_daily_recipe = (f'Рецепт дня: {suitable_recipe.title}.\n'
+                                     '\n'
                                      f'Описание: {suitable_recipe.description}\n'
-                                     f'Примерная стоимость: {suitable_recipe.total_cost}\n'
-                                     f'Ингредиенты: {', '.join(ingredients)}\n'
-                                     f'Шаги приготовления: {suitable_recipe.cooking_steps}\n\n')
+                                     '\n'
+                                     f'стоимость: {suitable_recipe.total_cost}\n'
+                                     '\n'
+                                     f'Ингредиенты: {', '.join(ingredients)}\n')
 
         if f'{suitable_recipe.image}'.endswith('.gif'):
             await message.answer_animation(animation=photo_path,

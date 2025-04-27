@@ -1,6 +1,9 @@
 import asyncio
 import logging
 import os
+os.environ["DJANGO_SETTINGS_MODULE"] = "foodplan.settings"
+import django
+django.setup()
 from aiogram import Bot, Dispatcher, types
 from dotenv import load_dotenv
 
