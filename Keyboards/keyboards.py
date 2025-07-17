@@ -16,6 +16,12 @@ def get_restrictions_keyboard(selected: set, options):
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 
-choose_diet_button = ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text='Выбрать ограничения')]],
-        resize_keyboard=True)
+choose_diet_button = KeyboardButton(text='Индивидуальные предпочтения')
+choose_budget_button = KeyboardButton(text='Выбрать блюдо по дешевле')
+
+combined_keyboard = ReplyKeyboardMarkup(
+    keyboard=[
+        [choose_diet_button, choose_budget_button]
+    ],
+    resize_keyboard=True
+)
